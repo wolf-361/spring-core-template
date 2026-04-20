@@ -45,6 +45,7 @@ find src -type f \( -name "*.kt" -o -name "*.xml" -o -name "*.yml" -o -name "*.y
 
 sed -i "s|${TEMPLATE_GROUP}|${GROUP}|g" build.gradle.kts
 sed -i "s|\"${TEMPLATE_PROJECT}\"|\"${ARTIFACT}\"|g" settings.gradle.kts
+sed -i "s|name: core-service|name: ${ARTIFACT}|g" src/main/resources/application.yml
 
 echo "→ Moving source directories..."
 
