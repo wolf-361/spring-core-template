@@ -11,7 +11,7 @@ springdoc = "3.0.3"
 logstash-logback = "8.0"
 mockk = "1.14.9"
 kotest = "6.1.11"
-wiremock = "3.9.2"
+wiremock = "3.13.2"
 
 [libraries]
 # Spring Boot starters (version managed by BOM)
