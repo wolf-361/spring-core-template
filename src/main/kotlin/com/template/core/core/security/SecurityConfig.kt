@@ -5,6 +5,7 @@ import com.template.core.core.jwt.JwtValidationFilter
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.env.Environment
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -18,7 +19,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity
 class SecurityConfig(
     private val jwtValidationFilter: JwtValidationFilter,
-    private val appProperties: AppProperties
+    private val appProperties: AppProperties,
+    private val environment: Environment
 ) {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -27,13 +29,15 @@ class SecurityConfig(
             .csrf { it.disable() }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
-                auth
-                    .requestMatchers(
+                auth.requestMatchers("/error").permitAll()
+                if (environment.activeProfiles.contains("dev")) {
+                    auth.requestMatchers(
+                        "/v3/api-docs/**",
                         "/swagger-ui/**",
                         "/swagger-ui.html",
-                        "/v3/api-docs/**",
-                        "/error"
+                        "/docs/**"
                     ).permitAll()
+                }
                 auth.anyRequest().authenticated()
             }.exceptionHandling { ex ->
                 ex.authenticationEntryPoint { _, response, _ ->
