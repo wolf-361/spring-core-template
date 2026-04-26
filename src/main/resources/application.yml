@@ -11,6 +11,10 @@ spring:
     password: ${DB_PASSWORD:core}
     driver-class-name: org.postgresql.Driver
 
+  flyway:
+    schemas: ${DB_SCHEMA:public}
+    default-schema: ${DB_SCHEMA:public}
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -46,6 +50,9 @@ springdoc:
     enabled: false
   swagger-ui:
     enabled: false
+
+loki:
+  url: ${LOKI_URL:http://localhost:3100}
 
 app:
   cors:
