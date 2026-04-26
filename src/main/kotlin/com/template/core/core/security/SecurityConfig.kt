@@ -31,12 +31,13 @@ class SecurityConfig(
             .authorizeHttpRequests { auth ->
                 auth.requestMatchers("/error").permitAll()
                 if (environment.activeProfiles.contains("dev")) {
-                    auth.requestMatchers(
-                        "/v3/api-docs/**",
-                        "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/docs/**"
-                    ).permitAll()
+                    auth
+                        .requestMatchers(
+                            "/v3/api-docs/**",
+                            "/swagger-ui/**",
+                            "/swagger-ui.html",
+                            "/docs/**"
+                        ).permitAll()
                 }
                 auth.anyRequest().authenticated()
             }.exceptionHandling { ex ->
