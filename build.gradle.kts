@@ -95,30 +95,32 @@ tasks.jacocoTestReport {
 tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
-            excludes = listOf(
-                "*.dto.*",
-                "*.config.*",
-                "*.exception.*",
-                "*.seed.*",
-                "*.mapper.*",
-                "*Application*",
-                "**/generated/**"
-            )
+            excludes =
+                listOf(
+                    "*.dto.*",
+                    "*.config.*",
+                    "*.exception.*",
+                    "*.seed.*",
+                    "*.mapper.*",
+                    "*Application*",
+                    "**/generated/**"
+                )
             limit {
                 counter = "LINE"
                 minimum = "0.80".toBigDecimal()
             }
         }
         rule {
-            excludes = listOf(
-                "*.dto.*",
-                "*.config.*",
-                "*.exception.*",
-                "*.seed.*",
-                "*.mapper.*",
-                "*Application*",
-                "**/generated/**"
-            )
+            excludes =
+                listOf(
+                    "*.dto.*",
+                    "*.config.*",
+                    "*.exception.*",
+                    "*.seed.*",
+                    "*.mapper.*",
+                    "*Application*",
+                    "**/generated/**"
+                )
             limit {
                 counter = "BRANCH"
                 minimum = "0.70".toBigDecimal()
