@@ -26,7 +26,7 @@ class RequestLoggingFilter : OncePerRequestFilter() {
             filterChain.doFilter(request, response)
         } finally {
             val duration = System.currentTimeMillis() - start
-            log.info("{} {} → {} ({}ms)", request.method, request.requestURI, response.status, duration)
+            log.info("Completed: {} ({}ms)", response.status, duration)
             MDC.remove("method")
             MDC.remove("path")
         }

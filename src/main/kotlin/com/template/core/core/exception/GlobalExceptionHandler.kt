@@ -1,7 +1,6 @@
 package com.template.core.core.exception
 
 import com.template.core.features.item.domain.exception.ItemException
-import jakarta.servlet.http.HttpServletRequest
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.http.HttpStatus
@@ -16,17 +15,10 @@ import java.time.Instant
 class GlobalExceptionHandler {
     private val log = LoggerFactory.getLogger(javaClass)
 
-    private fun sanitizeForLog(value: String?): String =
-        value
-            ?.replace(Regex("[\\r\\n\\t\\u0000-\\u001F\\u007F]"), "_")
-            ?: "null"
-
     @ExceptionHandler(ItemException.NotFound::class)
-    fun handleItemNotFound(
-        ex: ItemException,
-        req: HttpServletRequest
-    ) = error(HttpStatus.NOT_FOUND, "ITEM_NOT_FOUND", "Item not found")
-        .also { log.warn("Item not found [{}]", sanitizeForLog(req.requestURI)) }
+    fun handleItemNotFound(ex: ItemException) =
+        error(HttpStatus.NOT_FOUND, "ITEM_NOT_FOUND", "Item not found")
+            .also { log.warn("Item not found") }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidation(ex: MethodArgumentNotValidException): ResponseEntity<ErrorResponse> {
@@ -44,11 +36,8 @@ class GlobalExceptionHandler {
         error(HttpStatus.BAD_REQUEST, "BAD_REQUEST", ex.message ?: "Bad request")
 
     @ExceptionHandler(Exception::class)
-    fun handleGeneric(
-        ex: Exception,
-        req: HttpServletRequest
-    ): ResponseEntity<ErrorResponse> {
-        log.error("Unexpected error [{}]", sanitizeForLog(req.requestURI), ex)
+    fun handleGeneric(ex: Exception): ResponseEntity<ErrorResponse> {
+        log.error("Unexpected error", ex)
         return error(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_ERROR", "An unexpected error occurred")
     }
 

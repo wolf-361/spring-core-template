@@ -4,8 +4,6 @@ import com.template.core.features.item.domain.exception.ItemException
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import jakarta.servlet.http.HttpServletRequest
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 import org.springframework.http.converter.HttpMessageNotReadableException
@@ -16,16 +14,10 @@ import java.util.UUID
 
 class GlobalExceptionHandlerTest {
     private val handler = GlobalExceptionHandler()
-    private val req = mockk<HttpServletRequest>(relaxed = true)
-
-    @BeforeEach
-    fun setup() {
-        every { req.requestURI } returns "/items/test"
-    }
 
     @Test
     fun `handleItemNotFound returns 404 with ITEM_NOT_FOUND code`() {
-        val response = handler.handleItemNotFound(ItemException.NotFound(UUID.randomUUID()), req)
+        val response = handler.handleItemNotFound(ItemException.NotFound(UUID.randomUUID()))
 
         response.statusCode.value() shouldBe 404
         response.body?.code shouldBe "ITEM_NOT_FOUND"
@@ -87,7 +79,7 @@ class GlobalExceptionHandlerTest {
 
     @Test
     fun `handleGeneric returns 500 with INTERNAL_ERROR code`() {
-        val response = handler.handleGeneric(RuntimeException("boom"), req)
+        val response = handler.handleGeneric(RuntimeException("boom"))
 
         response.statusCode.value() shouldBe 500
         response.body?.code shouldBe "INTERNAL_ERROR"
