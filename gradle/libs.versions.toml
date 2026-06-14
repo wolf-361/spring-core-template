@@ -6,7 +6,7 @@ ktlint-plugin = "14.2.0"
 
 jjwt = "0.13.0"
 flyway = "12.6.1"
-micrometer-prometheus = "1.16.5"
+micrometer-prometheus = "1.17.0"
 springdoc = "3.0.3"
 logstash-logback = "9.0"
 loki-logback = "2.0.3"
