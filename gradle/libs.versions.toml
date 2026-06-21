@@ -10,8 +10,8 @@ micrometer-prometheus = "1.16.5"
 springdoc = "3.0.3"
 logstash-logback = "9.0"
 loki-logback = "2.0.3"
-mockk = "1.14.9"
-kotest = "6.1.11"
+mockk = "1.14.11"
+kotest = "6.2.1"
 wiremock = "3.13.2"
 
 [libraries]
